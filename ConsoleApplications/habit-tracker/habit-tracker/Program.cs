@@ -8,7 +8,8 @@ namespace habit_tracker
         {
             MySQLiteConnection _sqliteConnection = new MySQLiteConnection("habits.db");
             _sqliteConnection.GetSQLiteVersion();
-            _sqliteConnection.CreateHabbitsTable();
+            _sqliteConnection.CreateHabbitsTable("habits");
+            _sqliteConnection.InsertData("drink", 40);
         }
     }
 }

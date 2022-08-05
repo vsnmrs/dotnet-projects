@@ -5,6 +5,8 @@ namespace habit_tracker
     public class MySQLiteConnection
     {
         private SQLiteConnection _connection;
+        private SQLiteCommand _command;
+        private string _tableName;
 
         public MySQLiteConnection(string dbName)
         {
@@ -13,6 +15,8 @@ namespace habit_tracker
             try
             {
                 _connection.Open();
+                _command = new SQLiteCommand(_connection);
+
                 Console.WriteLine($"Connection to the {dbName} database established!");
             }
             catch (Exception e)
@@ -23,17 +27,23 @@ namespace habit_tracker
 
         public void GetSQLiteVersion()
         {
-            var command = new SQLiteCommand("SELECT SQLITE_VERSION()", _connection);
-            string? version = command.ExecuteScalar().ToString();
+            _command.CommandText = @"SELECT SQLITE_VERSION()";
+            string? version = _command.ExecuteScalar().ToString();
 
             Console.WriteLine($"SQLite version {version}");
         }
 
-        public void CreateHabbitsTable()
+        public void CreateHabbitsTable(string tableName)
         {
-            var command = new SQLiteCommand(_connection);
-            command.CommandText = @"CREATE TABLE IF NOT EXISTS habits(id INTEGER PRIMARY KEY, name TEXT, value INT)";
-            command.ExecuteNonQuery();
+            _tableName = tableName;
+            _command.CommandText = $"CREATE TABLE IF NOT EXISTS {tableName}(id INTEGER PRIMARY KEY, name TEXT, value INT)";
+            _command.ExecuteNonQuery();
+        }
+
+        public void InsertData(string habitName, int habitValue)
+        {
+            _command.CommandText = $"INSERT INTO {_tableName}(name, value) VALUES('{habitName}',{habitValue})";
+            _command.ExecuteNonQuery();
         }
     }
 }
