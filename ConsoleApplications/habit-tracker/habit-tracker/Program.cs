@@ -61,8 +61,8 @@ namespace habit_tracker
                         }
                     case "4":
                         {
-                            Console.WriteLine("pressed 4");
-                            // _sqliteConnection.InsertData("drink", 40);
+                            Console.WriteLine("Listing all records:");
+                            _sqliteConnection.ReadDatabase();
                             break;
                         }
                     default:

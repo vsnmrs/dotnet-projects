@@ -45,5 +45,18 @@ namespace habit_tracker
             _command.CommandText = $"INSERT INTO {_tableName}(name, value) VALUES('{habitName}',{habitValue})";
             _command.ExecuteNonQuery();
         }
+
+        public void ReadDatabase()
+        {
+            _command.CommandText = $"SELECT * FROM {_tableName}";
+            SQLiteDataReader dataReader = _command.ExecuteReader();
+
+            while (dataReader.Read())
+            {
+                Console.WriteLine($"{dataReader.GetInt32(0)} {dataReader.GetString(1)} {dataReader.GetInt32(2)}");
+            }
+
+            dataReader.Close();
+        }
     }
 }
