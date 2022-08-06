@@ -36,17 +36,17 @@ namespace habit_tracker
         public void CreateHabbitsTable(string tableName)
         {
             _tableName = tableName;
-            _command.CommandText = $"CREATE TABLE IF NOT EXISTS {tableName}(id INTEGER PRIMARY KEY, name TEXT, value INT)";
+            _command.CommandText = $"CREATE TABLE IF NOT EXISTS {_tableName}(id INTEGER PRIMARY KEY, name TEXT, value INT)";
             _command.ExecuteNonQuery();
         }
 
-        public void InsertData(string habitName, int habitValue)
+        public void InsertRecord(string habitName, int habitValue)
         {
             _command.CommandText = $"INSERT INTO {_tableName}(name, value) VALUES('{habitName}',{habitValue})";
             _command.ExecuteNonQuery();
         }
 
-        public void ReadDatabase()
+        public void ReadDatabaseTable()
         {
             _command.CommandText = $"SELECT * FROM {_tableName}";
             SQLiteDataReader dataReader = _command.ExecuteReader();
@@ -56,7 +56,21 @@ namespace habit_tracker
                 Console.WriteLine($"{dataReader.GetInt32(0)} {dataReader.GetString(1)} {dataReader.GetInt32(2)}");
             }
 
+            Console.WriteLine();
+
             dataReader.Close();
+        }
+
+        public void UpdateRecord(string habit, int newValue)
+        {
+            _command.CommandText = $"UPDATE {_tableName} SET value = {newValue} WHERE name = '{habit}'";
+            _command.ExecuteNonQuery();
+        }
+
+        public void DeleteRecord(string habit)
+        {
+            _command.CommandText = $"DELETE FROM {_tableName} WHERE name = '{habit}'";
+            _command.ExecuteNonQuery();
         }
     }
 }

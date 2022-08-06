@@ -41,7 +41,7 @@ namespace habit_tracker
                             bool isParsable = Int32.TryParse(sValue, out value);
 
                             if (isParsable)
-                                _sqliteConnection.InsertData(name, value);
+                                _sqliteConnection.InsertRecord(name, value);
                             else
                                 Console.WriteLine("Error: Value entered is not a number");
 
@@ -49,20 +49,33 @@ namespace habit_tracker
                         }
                     case "2":
                         {
-                            Console.WriteLine("pressed 2");
-                            // _sqliteConnection.InsertData("drink", 40);
+                            Console.WriteLine("Enter the name of the habit you want to edit: ");
+                            string? name = Console.ReadLine();
+
+                            Console.WriteLine("Enter the new value: ");
+                            string? sValue = Console.ReadLine();
+                            int value;
+                            bool isParsable = Int32.TryParse(sValue, out value);
+
+                            if (isParsable)
+                                _sqliteConnection.UpdateRecord(name, value);
+                            else
+                                Console.WriteLine("Error: Value entered is not a number");
+
                             break;
                         }
                     case "3":
                         {
-                            Console.WriteLine("pressed 3");
-                            // _sqliteConnection.InsertData("drink", 40);
+                            Console.WriteLine("Eneter the name of the habit to be deleted: ");
+                            string? name = Console.ReadLine();
+                            _sqliteConnection.DeleteRecord(name);
+
                             break;
                         }
                     case "4":
                         {
                             Console.WriteLine("Listing all records:");
-                            _sqliteConnection.ReadDatabase();
+                            _sqliteConnection.ReadDatabaseTable();
                             break;
                         }
                     default:
