@@ -76,6 +76,36 @@ namespace CalculatorLibrary
                         _operationCount++;
                     }
                     break;
+                case "p":
+                    break;
+                default:
+                    break;
+            }
+
+            _writer.WritePropertyName("Result");
+            _writer.WriteValue(result);
+            _writer.WriteEndObject();
+
+            return result;
+        }
+
+        public double Compute(double num, string operation)
+        {
+            double result = double.NaN;
+
+            _writer.WriteStartObject();
+            _writer.WritePropertyName("Operand 1");
+            _writer.WriteValue(num);
+            _writer.WritePropertyName("Operation");
+
+            switch (operation)
+            {
+                case "r":
+                    result = Math.Sqrt(num);
+                    Trace.WriteLine(String.Format("Sqrt {0} = {1}", num, result));
+                    _writer.WriteValue("Square root");
+                    _operationCount++;
+                    break;
                 default:
                     break;
             }
