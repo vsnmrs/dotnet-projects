@@ -8,6 +8,8 @@ namespace CalculatorProgram
         {
             bool endProgram = false;
 
+            Calculator calculator = new Calculator();
+
             Console.WriteLine("Console Calculator in C#\r");
             Console.WriteLine("------------------------\n");
 
@@ -46,7 +48,7 @@ namespace CalculatorProgram
 
                 try
                 {
-                    result = Calculator.Compute(num1, num2, operation);
+                    result = calculator.Compute(num1, num2, operation);
 
                     if (double.IsNaN(result))
                         Console.WriteLine("This operation will result in a matemathical error!");
