@@ -7,7 +7,16 @@ namespace CalculatorLibrary
 {
     public class Calculator
     {
-        JsonWriter _writer;
+        private JsonWriter _writer;
+
+        //counts how many operations where performed during the program run
+        private int _operationCount = 0;
+
+        public int OperationCount
+        {
+            get { return _operationCount; }
+        }
+
         public Calculator()
         {
             //log into a file with the Trace class
@@ -44,16 +53,19 @@ namespace CalculatorLibrary
                     result = n1 + n2;
                     Trace.WriteLine(String.Format("{0} + {1} = {2}", n1, n2, result));
                     _writer.WriteValue("Add");
+                    _operationCount++;
                     break;
                 case "s":
                     result = n1 - n2;
                     Trace.WriteLine(String.Format("{0} - {1} = {2}", n1, n2, result));
                     _writer.WriteValue("Substract");
+                    _operationCount++;
                     break;
                 case "m":
                     result = n1 * n2;
                     Trace.WriteLine(String.Format("{0} * {1} = {2}", n1, n2, result));
                     _writer.WriteValue("Multiply");
+                    _operationCount++;
                     break;
                 case "d":
                     if (n2 != 0)
@@ -61,6 +73,7 @@ namespace CalculatorLibrary
                         result = n1 / n2;
                         Trace.WriteLine(String.Format("{0} / {1} = {2}", n1, n2, result));
                         _writer.WriteValue("Divide");
+                        _operationCount++;
                     }
                     break;
                 default:
