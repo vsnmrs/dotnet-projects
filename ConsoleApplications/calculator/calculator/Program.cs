@@ -62,10 +62,12 @@ namespace CalculatorProgram
 
                 Console.WriteLine("Press q to close the program or any other key to continue!");
                 if (Console.ReadLine() == "q")
+                {
                     endProgram = true;
+                    calculator.Finish();
+                }
 
                 Console.WriteLine("------------------------\n");
-
             }
         }
     }
