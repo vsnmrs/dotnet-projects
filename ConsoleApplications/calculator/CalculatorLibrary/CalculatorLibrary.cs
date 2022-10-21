@@ -77,6 +77,10 @@ namespace CalculatorLibrary
                     }
                     break;
                 case "p":
+                    result = Math.Pow(n1, n2);
+                    Trace.WriteLine(String.Format("{0} ^ {1} = {2}", n1, n2, result));
+                    _writer.WriteValue("Power");
+                    _operationCount++;
                     break;
                 default:
                     break;

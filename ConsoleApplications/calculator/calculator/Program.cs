@@ -24,22 +24,22 @@ namespace CalculatorProgram
 
                 if (command == "1")
                 {
-                    string number1, number2;
+                    string firstOption, secondOption;
                     double result;
 
                     Console.WriteLine("Type a number and then press ENTER");
-                    string firstOption = Console.ReadLine();
+                    firstOption = Console.ReadLine();
 
                     double num1;
                     while (!double.TryParse(firstOption, out num1))
                     {
                         Console.WriteLine("The input is not valid. Enter a number value!");
-                        number1 = Console.ReadLine();
+                        firstOption = Console.ReadLine();
                     }
 
                     Console.WriteLine("Type another number to add the second operand or choose an option:");
                     Console.WriteLine("\t r - Square Root");
-                    string secondOption = Console.ReadLine();
+                    secondOption = Console.ReadLine();
 
                     if (secondOption == "r")
                     {
@@ -63,7 +63,7 @@ namespace CalculatorProgram
                         while (!double.TryParse(secondOption, out num2))
                         {
                             Console.WriteLine("The input is not valid. Enter a number value!");
-                            number2 = Console.ReadLine();
+                            secondOption = Console.ReadLine();
                         }
 
                         Console.WriteLine("Choose an operation from the following list:");
