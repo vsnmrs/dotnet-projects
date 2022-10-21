@@ -1,4 +1,6 @@
-﻿namespace calculator
+﻿using CalculatorLibrary;
+
+namespace CalculatorProgram
 {
     internal class Program
     {
@@ -44,7 +46,7 @@
 
                 try
                 {
-                    result = Calculator.Calculate(num1, num2, operation);
+                    result = Calculator.Compute(num1, num2, operation);
 
                     if (double.IsNaN(result))
                         Console.WriteLine("This operation will result in a matemathical error!");

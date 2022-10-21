@@ -1,8 +1,8 @@
-﻿namespace calculator
+﻿namespace CalculatorLibrary
 {
-    internal class Calculator
+    public class Calculator
     {
-        public static double Calculate(double n1, double n2, string operation)
+        public static double Compute(double n1, double n2, string operation)
         {
             double result = double.NaN;
 
