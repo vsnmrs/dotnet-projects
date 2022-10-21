@@ -18,6 +18,7 @@ namespace CalculatorProgram
                 Console.WriteLine("Choose an option: ");
                 Console.WriteLine("\t 1: Use Calculator");
                 Console.WriteLine("\t 2: See usage count");
+                Console.WriteLine("\t 3: Show memory");
                 Console.WriteLine("\t q: Quit program");
 
                 string command = Console.ReadLine();
@@ -93,6 +94,10 @@ namespace CalculatorProgram
                 else if (command == "2")
                 {
                     Console.WriteLine("Calculator was used {0} time(s)!", calculator.OperationCount.ToString());
+                }
+                else if (command == "3")
+                {
+                    calculator.PrintMemory();
                 }
                 else if (command == "q")
                 {

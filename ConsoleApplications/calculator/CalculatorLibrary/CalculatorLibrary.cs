@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Diagnostics;
+using System.Collections.Generic;
 
 using Newtonsoft.Json;
 
@@ -12,6 +13,9 @@ namespace CalculatorLibrary
         //counts how many operations where performed during the program run
         private int _operationCount = 0;
 
+        private Queue<string> _memory;
+        private const int MEMORY_SIZE = 5;
+
         public int OperationCount
         {
             get { return _operationCount; }
@@ -19,6 +23,8 @@ namespace CalculatorLibrary
 
         public Calculator()
         {
+            _memory = new Queue<string>();
+
             //log into a file with the Trace class
             StreamWriter logFile = File.CreateText("calculator.log");
             Trace.Listeners.Add(new TextWriterTraceListener(logFile));
@@ -51,36 +57,26 @@ namespace CalculatorLibrary
             {
                 case "a":
                     result = n1 + n2;
-                    Trace.WriteLine(String.Format("{0} + {1} = {2}", n1, n2, result));
-                    _writer.WriteValue("Add");
-                    _operationCount++;
+                    LogOperation("{0} + {1} = {2}", "Add", n1, n2, result);
                     break;
                 case "s":
                     result = n1 - n2;
-                    Trace.WriteLine(String.Format("{0} - {1} = {2}", n1, n2, result));
-                    _writer.WriteValue("Substract");
-                    _operationCount++;
+                    LogOperation("{0} - {1} = {2}", "Substract", n1, n2, result);
                     break;
                 case "m":
                     result = n1 * n2;
-                    Trace.WriteLine(String.Format("{0} * {1} = {2}", n1, n2, result));
-                    _writer.WriteValue("Multiply");
-                    _operationCount++;
+                    LogOperation("{0} * {1} = {2}", "Multiply", n1, n2, result);
                     break;
                 case "d":
                     if (n2 != 0)
                     {
                         result = n1 / n2;
-                        Trace.WriteLine(String.Format("{0} / {1} = {2}", n1, n2, result));
-                        _writer.WriteValue("Divide");
-                        _operationCount++;
+                        LogOperation("{0} / {1} = {2}", "Divide", n1, n2, result);
                     }
                     break;
                 case "p":
                     result = Math.Pow(n1, n2);
-                    Trace.WriteLine(String.Format("{0} ^ {1} = {2}", n1, n2, result));
-                    _writer.WriteValue("Power");
-                    _operationCount++;
+                    LogOperation("{0} ^ {1} = {2}", "Power", n1, n2, result);
                     break;
                 default:
                     break;
@@ -106,9 +102,10 @@ namespace CalculatorLibrary
             {
                 case "r":
                     result = Math.Sqrt(num);
-                    Trace.WriteLine(String.Format("Sqrt {0} = {1}", num, result));
-                    _writer.WriteValue("Square root");
-                    _operationCount++;
+                    //Trace.WriteLine(String.Format(, num, result));
+                    //_writer.WriteValue();
+                    //_operationCount++;
+                    LogOperation("Sqrt {0} = {1}", "Square root", num, null, result);
                     break;
                 default:
                     break;
@@ -126,6 +123,36 @@ namespace CalculatorLibrary
             _writer.WriteEndArray();
             _writer.WriteEndObject();
             _writer.Close();
+        }
+
+        private void LogOperation(string traceFormat, string jsonFormat, double n1, double? n2, double result)
+        {
+            string op = string.Empty;
+
+            if (n2 != null)
+                op = String.Format(traceFormat, n1, n2, result);
+            else
+                op = String.Format(traceFormat, n1, result);
+
+            Trace.WriteLine(op);
+            _writer.WriteValue(jsonFormat);
+            _operationCount++;
+
+            UpdateMemory(op);
+        }
+
+        private void UpdateMemory(string operation)
+        {
+            if (_memory.Count >= MEMORY_SIZE)
+                _memory.Dequeue();
+
+            _memory.Enqueue(operation);
+        }
+
+        public void PrintMemory()
+        {
+            foreach (string operation in _memory)
+                Console.WriteLine(operation);
         }
     }
 }
