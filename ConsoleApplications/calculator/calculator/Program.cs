@@ -19,6 +19,7 @@ namespace CalculatorProgram
                 Console.WriteLine("\t 1: Use Calculator");
                 Console.WriteLine("\t 2: See usage count");
                 Console.WriteLine("\t 3: Show memory");
+                Console.WriteLine("\t 4: Clear memory");
                 Console.WriteLine("\t q: Quit program");
 
                 string command = Console.ReadLine();
@@ -98,6 +99,10 @@ namespace CalculatorProgram
                 else if (command == "3")
                 {
                     calculator.PrintMemory();
+                }
+                else if (command == "4")
+                {
+                    calculator.ClearMemory();
                 }
                 else if (command == "q")
                 {

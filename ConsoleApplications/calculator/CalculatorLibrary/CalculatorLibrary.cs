@@ -151,8 +151,16 @@ namespace CalculatorLibrary
 
         public void PrintMemory()
         {
+            if (_memory.Count == 0)
+                Console.WriteLine("Memory is empty!");
+
             foreach (string operation in _memory)
                 Console.WriteLine(operation);
+        }
+
+        public void ClearMemory()
+        {
+            _memory.Clear();
         }
     }
 }
