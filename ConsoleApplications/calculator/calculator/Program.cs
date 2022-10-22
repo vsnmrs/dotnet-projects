@@ -27,68 +27,95 @@ namespace CalculatorProgram
                 if (command == "1")
                 {
                     string firstOption, secondOption;
-                    double result;
+                    double num1 = 0;
 
-                    Console.WriteLine("Type a number and then press ENTER");
-                    firstOption = Console.ReadLine();
-
-                    double num1;
-                    while (!double.TryParse(firstOption, out num1))
+                    Console.Write("Type a number and then press ENTER");
+                    if (calculator.Memory.Count > 0)
                     {
-                        Console.WriteLine("The input is not valid. Enter a number value!");
+                        Console.WriteLine(", or type m to select a result from memory!");
+
                         firstOption = Console.ReadLine();
-                    }
-
-                    Console.WriteLine("Type another number to add the second operand or choose an option:");
-                    Console.WriteLine("\t r - Square Root");
-                    secondOption = Console.ReadLine();
-
-                    if (secondOption == "r")
-                    {
-                        try
+                        
+                        if (firstOption == "m")
                         {
-                            result = calculator.Compute(num1, secondOption);
-
-                            if (double.IsNaN(result))
-                                Console.WriteLine("This operation will result in a matemathical error!");
-                            else
-                                Console.WriteLine("Result = " + result);
+                            num1 = GetValueFromMemory(calculator);
                         }
-                        catch (Exception e)
+                        else
                         {
-                            Console.WriteLine("Error!" + e.Message);
+                            while (!double.TryParse(firstOption, out num1))
+                            {
+                                Console.WriteLine("The input is not valid. Enter a number value!");
+                                firstOption = Console.ReadLine();
+                            }
                         }
                     }
                     else
                     {
-                        double num2;
-                        while (!double.TryParse(secondOption, out num2))
+                        firstOption = Console.ReadLine();
+
+                        while (!double.TryParse(firstOption, out num1))
                         {
                             Console.WriteLine("The input is not valid. Enter a number value!");
-                            secondOption = Console.ReadLine();
+                            firstOption = Console.ReadLine();
+                        }
+                    }
+
+                    Console.WriteLine("Type another number to add the second operand, or choose an option:");
+                    Console.WriteLine("\t r - Square Root");
+
+                    if (calculator.Memory.Count > 0)
+                    {
+                        Console.WriteLine("\t m - Select a result from memory");
+
+                        secondOption = Console.ReadLine();
+
+                        double num2 = 0;
+
+                        if (secondOption == "m")
+                        {
+                            num2 = GetValueFromMemory(calculator);
+                        }
+                        else
+                        {
+                            while (!double.TryParse(secondOption, out num2))
+                            {
+                                Console.WriteLine("The input is not valid. Enter a number value!");
+                                secondOption = Console.ReadLine();
+                            }
                         }
 
-                        Console.WriteLine("Choose an operation from the following list:");
-                        Console.WriteLine("\t a - Add");
-                        Console.WriteLine("\t s - Substract");
-                        Console.WriteLine("\t m - Multiply");
-                        Console.WriteLine("\t d - Divide");
-                        Console.WriteLine("\t p - Power");
-                        Console.Write("Your option:");
-                        string operation = Console.ReadLine();
+                        PerformCalculation(calculator, num1, num2);
+                    }
+                    else
+                    {
+                        secondOption = Console.ReadLine();
 
-                        try
+                        if (secondOption == "r")
                         {
-                            result = calculator.Compute(num1, num2, operation);
+                            try
+                            {
+                                double result = calculator.Compute(num1, secondOption);
 
-                            if (double.IsNaN(result))
-                                Console.WriteLine("This operation will result in a matemathical error!");
-                            else
-                                Console.WriteLine("Result = " + result);
+                                if (double.IsNaN(result))
+                                    Console.WriteLine("This operation will result in a matemathical error!");
+                                else
+                                    Console.WriteLine("Result = " + result);
+                            }
+                            catch (Exception e)
+                            {
+                                Console.WriteLine("Error!" + e.Message);
+                            }
                         }
-                        catch (Exception e)
+                        else
                         {
-                            Console.WriteLine("Error!" + e.Message);
+                            double num2;
+                            while (!double.TryParse(secondOption, out num2))
+                            {
+                                Console.WriteLine("The input is not valid. Enter a number value!");
+                                secondOption = Console.ReadLine();
+                            }
+
+                            PerformCalculation(calculator, num1, num2);
                         }
                     }
                 }
@@ -111,6 +138,56 @@ namespace CalculatorProgram
                 }
 
                 Console.WriteLine("------------------------\n");
+            }
+        }
+
+        private static double GetValueFromMemory(Calculator calculator)
+        {
+            double result = 0;
+            Console.WriteLine("Select the number coresponding to the value you want to use");
+            calculator.PrintMemory();
+
+            string memIndex = Console.ReadLine();
+            int index;
+
+            while (!int.TryParse(memIndex, out index) || (index <= 0 || index > calculator.Memory.Count))
+            {
+                Console.WriteLine("Incorrect format or selection is out of range, try again!");
+                memIndex = Console.ReadLine();
+            }
+
+            //cannot get the element from a random index in a queue so we have to convert it to an array then to a list
+            result = calculator.Memory.ToArray().ToList()[index - 1].Value;
+            Console.WriteLine("Value {0} was selected", result);
+
+            return result;
+        }
+
+        private static void PerformCalculation(Calculator calculator, double num1, double num2)
+        {
+            double result;
+
+            Console.WriteLine("Choose an operation from the following list:");
+            Console.WriteLine("\t a - Add");
+            Console.WriteLine("\t s - Substract");
+            Console.WriteLine("\t m - Multiply");
+            Console.WriteLine("\t d - Divide");
+            Console.WriteLine("\t p - Power");
+            Console.Write("Your option:");
+            string operation = Console.ReadLine();
+
+            try
+            {
+                result = calculator.Compute(num1, num2, operation);
+
+                if (double.IsNaN(result))
+                    Console.WriteLine("This operation will result in a matemathical error!");
+                else
+                    Console.WriteLine("Result = " + result);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error!" + e.Message);
             }
         }
     }

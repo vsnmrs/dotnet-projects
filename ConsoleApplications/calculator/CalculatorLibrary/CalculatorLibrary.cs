@@ -6,6 +6,18 @@ using Newtonsoft.Json;
 
 namespace CalculatorLibrary
 {
+    public struct Memory
+    {
+        public Memory(string op, double value)
+        {
+            Operation = op;
+            Value = value;
+        }
+
+        public string Operation;
+        public double Value;
+    }
+
     public class Calculator
     {
         private JsonWriter _writer;
@@ -13,8 +25,10 @@ namespace CalculatorLibrary
         //counts how many operations where performed during the program run
         private int _operationCount = 0;
 
-        private Queue<string> _memory;
+        private Queue<Memory> _memory;
         private const int MEMORY_SIZE = 5;
+
+        public Queue<Memory> Memory { get { return _memory; } }
 
         public int OperationCount
         {
@@ -23,7 +37,7 @@ namespace CalculatorLibrary
 
         public Calculator()
         {
-            _memory = new Queue<string>();
+            _memory = new Queue<Memory>();
 
             //log into a file with the Trace class
             StreamWriter logFile = File.CreateText("calculator.log");
@@ -102,9 +116,6 @@ namespace CalculatorLibrary
             {
                 case "r":
                     result = Math.Sqrt(num);
-                    //Trace.WriteLine(String.Format(, num, result));
-                    //_writer.WriteValue();
-                    //_operationCount++;
                     LogOperation("Sqrt {0} = {1}", "Square root", num, null, result);
                     break;
                 default:
@@ -138,15 +149,15 @@ namespace CalculatorLibrary
             _writer.WriteValue(jsonFormat);
             _operationCount++;
 
-            UpdateMemory(op);
+            UpdateMemory(op, result);
         }
 
-        private void UpdateMemory(string operation)
+        private void UpdateMemory(string operation, double result)
         {
             if (_memory.Count >= MEMORY_SIZE)
                 _memory.Dequeue();
 
-            _memory.Enqueue(operation);
+            _memory.Enqueue(new Memory(operation, result));
         }
 
         public void PrintMemory()
@@ -154,8 +165,9 @@ namespace CalculatorLibrary
             if (_memory.Count == 0)
                 Console.WriteLine("Memory is empty!");
 
-            foreach (string operation in _memory)
-                Console.WriteLine(operation);
+            int memIndex = 0;
+            foreach (Memory mem in _memory)
+                Console.WriteLine((++memIndex).ToString() + ". " + mem.Operation);
         }
 
         public void ClearMemory()
