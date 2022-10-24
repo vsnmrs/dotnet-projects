@@ -1,6 +1,6 @@
 ﻿namespace coding_tracker
 {
-    public class CoddingSessionRecord
+    public class CodingSessionRecord
     {
         private int _id;
         private string _sessionStart, _sessionEnd;
@@ -12,7 +12,7 @@
         private string SessionStart { get { return _sessionStart; } }
         private string SessionEnd { get { return _sessionEnd; } }
 
-        public CoddingSessionRecord(string sessionStart, string sessionEnd)
+        public CodingSessionRecord(string sessionStart, string sessionEnd)
         {
             _sessionStart = sessionStart;
             _sessionEnd = sessionEnd;

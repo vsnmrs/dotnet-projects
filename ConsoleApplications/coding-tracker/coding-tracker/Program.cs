@@ -13,6 +13,8 @@ namespace coding_tracker
             if (databasePath != null && databaseName != null)
             {
                 SQLiteDBConnection connection = new SQLiteDBConnection(databasePath, databaseName);
+
+                UserInput.GetUserInput();
             }
             else
             {
