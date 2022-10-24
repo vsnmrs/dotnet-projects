@@ -40,5 +40,25 @@ namespace coding_tracker
             _command.CommandText = $"CREATE TABLE IF NOT EXISTS {tableName}(id INTEGER PRIMARY KEY, startTime TEXT, endTime TEXT, duration INTEGER)";
             _command.ExecuteNonQuery();
         }
+
+        public void InsertRecord()
+        {
+
+        }
+
+        public void UpdateRecord()
+        {
+
+        }
+
+        public void DeleteRecord()
+        {
+
+        }
+
+        public void ReadDBTable()
+        {
+
+        }
     }
 }
