@@ -8,9 +8,16 @@ namespace coding_tracker
         static void Main(string[] args)
         {
             string? databasePath = ConfigurationManager.AppSettings.Get("databasePath");
-            string? databaseConnectionString = ConfigurationManager.AppSettings.Get("connectionString");
+            string? databaseName = ConfigurationManager.AppSettings.Get("databaseName");
 
-            Console.WriteLine(databasePath + " " + databaseConnectionString);
+            if (databasePath != null && databaseName != null)
+            {
+                SQLiteDBConnection connection = new SQLiteDBConnection(databasePath, databaseName);
+            }
+            else
+            {
+                Console.WriteLine("Could not load configuration file!");
+            }
         }
     }
 }
