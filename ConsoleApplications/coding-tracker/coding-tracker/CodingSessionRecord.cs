@@ -4,13 +4,12 @@
     {
         private int _id;
         private DateTime _sessionStart, _sessionEnd;
-        private int _sessionDuration; //in minutes, is auto-calculated, not entered manually
+        private double _sessionDuration; //in minutes, is auto-calculated, not entered manually
 
         private int ID { get { return _id; } }
-        private int SessionDuration { get { return _sessionDuration; } }
-
-        private DateTime SessionStart { get { return _sessionStart; } }
-        private DateTime SessionEnd { get { return _sessionEnd; } }
+        public double SessionDuration { get { return _sessionDuration; } }
+        public DateTime SessionStart { get { return _sessionStart; } }
+        public DateTime SessionEnd { get { return _sessionEnd; } }
 
         public CodingSessionRecord(DateTime sessionStart, DateTime sessionEnd)
         {
@@ -19,9 +18,10 @@
             _sessionDuration = CalculateDuration();
         }
 
-        private int CalculateDuration()
+        private double CalculateDuration()
         {
-            return 0;
+            TimeSpan duration = _sessionEnd - _sessionStart;
+            return duration.TotalMinutes;
         }
     }
 }
