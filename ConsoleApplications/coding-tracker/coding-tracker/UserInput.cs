@@ -4,7 +4,7 @@ namespace coding_tracker
 {
     public class UserInput
     {
-        public static void GetUserInput()
+        public static void GetUserInput(SQLiteDBConnection db)
         {
             bool closeApplication = false;
 
@@ -46,6 +46,8 @@ namespace coding_tracker
                             CodingSessionRecord record = new CodingSessionRecord(startDate, endDate);
 
                             Console.WriteLine("Total session duration was {0} minutes", record.SessionDuration);
+
+                            db.InsertRecord(record);
                         }
                         break;
                     default:

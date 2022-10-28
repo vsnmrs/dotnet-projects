@@ -14,7 +14,7 @@ namespace coding_tracker
             {
                 SQLiteDBConnection connection = new SQLiteDBConnection(databasePath, databaseName);
 
-                UserInput.GetUserInput();
+                UserInput.GetUserInput(connection);
             }
             else
             {

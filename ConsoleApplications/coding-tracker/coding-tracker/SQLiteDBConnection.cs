@@ -6,6 +6,7 @@ namespace coding_tracker
     {
         private SQLiteConnection _connection;
         private SQLiteCommand _command;
+        private string _tableName;
 
         public SQLiteDBConnection(string dbPath, string dbName)
         {
@@ -37,13 +38,15 @@ namespace coding_tracker
 
         private void CreateDBTable(string tableName)
         {
+            _tableName = tableName;
             _command.CommandText = $"CREATE TABLE IF NOT EXISTS {tableName}(id INTEGER PRIMARY KEY, startTime TEXT, endTime TEXT, duration INTEGER)";
             _command.ExecuteNonQuery();
         }
 
-        public void InsertRecord()
+        public void InsertRecord(CodingSessionRecord session)
         {
-
+            _command.CommandText = $"INSERT INTO {_tableName}(startTime, endTime, duration) VALUES('{session.SessionStart}','{session.SessionEnd}','{session.SessionDuration}')";
+            _command.ExecuteNonQuery();
         }
 
         public void UpdateRecord()
