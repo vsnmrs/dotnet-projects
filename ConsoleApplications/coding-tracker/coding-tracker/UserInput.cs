@@ -23,16 +23,27 @@ namespace coding_tracker
                         closeApplication = true;
                         break;
                     case "1":
-                        Console.WriteLine("Enter start time using the following format: dd/MM/year");
-                        string date = Console.ReadLine();
-                        DateTime d;
-                        while (!ConvertStringToDateTime(date, out d))
+                        string date;
+                        Console.WriteLine("Enter start time using the following format: dd/MM/yyyy/HH:mm");
+                        date = Console.ReadLine();
+                        DateTime startDate;
+                        while (!ConvertStringToDateTime(date, out startDate))
                         {
-                            Console.WriteLine("Incorrect date or time, try again! dd/MM/year");
+                            Console.WriteLine("Incorrect date or time, try again! dd/MM/year/HH:mm");
                             date = Console.ReadLine();
                         }
 
-                        Console.WriteLine(d.ToString());
+                        Console.WriteLine("Enter end time using the following format: dd/MM/yyyy/HH:mm");
+                        date = Console.ReadLine();
+                        DateTime endDate;
+                        while (!ConvertStringToDateTime(date, out endDate))
+                        {
+                            Console.WriteLine("Incorrect date or time, try again! dd/MM/year/HH:mm");
+                            date = Console.ReadLine();
+                        }
+
+                        Console.WriteLine(startDate.ToString());
+                        Console.WriteLine(endDate.ToString());
                         break;
                     default:
                         Console.WriteLine("Command not recognized, try again!");
@@ -45,7 +56,7 @@ namespace coding_tracker
         {;
             CultureInfo culture = CultureInfo.InvariantCulture;
 
-            bool result = DateTime.TryParseExact(dateString, "dd/MM/yyyy", culture, DateTimeStyles.None, out dTime);
+            bool result = DateTime.TryParseExact(dateString, "dd/MM/yyyy HH:mm", culture, DateTimeStyles.None, out dTime);
 
             if (result)
                 return true;
