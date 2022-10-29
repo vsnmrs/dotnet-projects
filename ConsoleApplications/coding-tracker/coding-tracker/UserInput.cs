@@ -51,10 +51,9 @@
                     case "2":
                         {
                             List<CodingSessionRecord> records = db.ReadDBTable();
-                            foreach (CodingSessionRecord record in records)
-                            {
-                                Console.WriteLine($"{record.ID} {record.SessionStart} {record.SessionEnd} {record.SessionDuration}");
-                            }
+
+                            TableVisualisation tableVisualisation = new(records);
+                            tableVisualisation.DisplayTable();
 
                             Console.WriteLine();
                         }
