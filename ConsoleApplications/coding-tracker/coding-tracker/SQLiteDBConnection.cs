@@ -8,6 +8,8 @@ namespace coding_tracker
         private SQLiteCommand _command;
         private string _tableName;
 
+        private List<CodingSessionRecord> _recordsList;
+
         public SQLiteDBConnection(string dbPath, string dbName)
         {
             _connection = new SQLiteConnection($"Data Source={dbPath}{dbName}");
@@ -59,9 +61,39 @@ namespace coding_tracker
 
         }
 
-        public void ReadDBTable()
+        public List<CodingSessionRecord> ReadDBTable()
         {
+            _command.CommandText = $"SELECT * FROM {_tableName}";
+            SQLiteDataReader dataReader = _command.ExecuteReader();
 
+            _recordsList = new List<CodingSessionRecord>();
+
+            while (dataReader.Read())
+            {
+                int id = dataReader.GetInt32(0);
+
+                string startDateString = dataReader.GetString(1);
+                string endDateString = dataReader.GetString(2);
+
+                //remove the last 3 characters from the string which represents the seconds
+                startDateString = startDateString.Substring(0, startDateString.Length - 3);
+                endDateString = endDateString.Substring(0, endDateString.Length - 3);
+
+                DateTime startDate, endDate;
+                Helper.ConvertStringToDateTime(startDateString, out startDate);
+                Helper.ConvertStringToDateTime(endDateString, out endDate);
+
+                CodingSessionRecord record = new(startDate, endDate)
+                {
+                    ID = id
+                };
+
+                _recordsList.Add(record);
+            }
+
+            dataReader.Close();
+
+            return _recordsList;
         }
     }
 }

@@ -6,7 +6,12 @@
         private DateTime _sessionStart, _sessionEnd;
         private double _sessionDuration; //in minutes, is auto-calculated, not entered manually
 
-        private int ID { get { return _id; } }
+        public int ID
+        {
+            get { return _id; }
+            set { _id = value; }
+        }
+
         public double SessionDuration { get { return _sessionDuration; } }
         public DateTime SessionStart { get { return _sessionStart; } }
         public DateTime SessionEnd { get { return _sessionEnd; } }
