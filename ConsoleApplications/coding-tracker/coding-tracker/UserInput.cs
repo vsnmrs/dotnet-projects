@@ -23,10 +23,12 @@
                     case "1":
                         {
                             string date;
+                            string errorMessage;
                             Console.WriteLine("Enter start time using the following format: dd.MM.yyyy HH:mm");
                             date = Console.ReadLine();
                             DateTime startDate;
-                            while (!Helper.ConvertStringToDateTime(date, out startDate))
+
+                            while (!Helper.ConvertStringToDateTime(date, out startDate, out errorMessage))
                             {
                                 Console.WriteLine("Incorrect date or time, try again! dd.MM.year HH:mm");
                                 date = Console.ReadLine();
@@ -35,9 +37,10 @@
                             Console.WriteLine("Enter end time using the following format: dd.MM.yyyy HH:mm");
                             date = Console.ReadLine();
                             DateTime endDate;
-                            while (!Helper.ConvertStringToDateTime(date, out endDate))
+
+                            while (!Helper.ConvertStringToDateTime(date, out endDate, out errorMessage) || !Helper.IsEndDateValid(startDate, endDate, out errorMessage))
                             {
-                                Console.WriteLine("Incorrect date or time, try again! dd.MM.year HH:mm");
+                                Console.WriteLine(errorMessage);
                                 date = Console.ReadLine();
                             }
 

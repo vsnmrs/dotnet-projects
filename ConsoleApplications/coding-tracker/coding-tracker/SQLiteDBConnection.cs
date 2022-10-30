@@ -80,8 +80,11 @@ namespace coding_tracker
                 endDateString = endDateString.Substring(0, endDateString.Length - 3);
 
                 DateTime startDate, endDate;
-                Helper.ConvertStringToDateTime(startDateString, out startDate);
-                Helper.ConvertStringToDateTime(endDateString, out endDate);
+                string errorMessage;
+                Helper.ConvertStringToDateTime(startDateString, out startDate, out errorMessage);
+                Helper.ConvertStringToDateTime(endDateString, out endDate, out errorMessage);
+
+                Console.WriteLine(errorMessage);
 
                 CodingSessionRecord record = new(startDate, endDate)
                 {
