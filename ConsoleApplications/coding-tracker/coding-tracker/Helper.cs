@@ -31,6 +31,13 @@ namespace coding_tracker
                 return false;
             }
 
+            TimeSpan duration = endDate - startDate;
+            if (duration.TotalMinutes > 1440)
+            {
+                errorMessage = "No way you code more than a day staight!";
+                return false;
+            }
+
             return true;
         }
     }

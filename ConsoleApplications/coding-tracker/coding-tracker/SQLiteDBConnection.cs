@@ -84,7 +84,8 @@ namespace coding_tracker
                 Helper.ConvertStringToDateTime(startDateString, out startDate, out errorMessage);
                 Helper.ConvertStringToDateTime(endDateString, out endDate, out errorMessage);
 
-                Console.WriteLine(errorMessage);
+                if (errorMessage.Length > 0)
+                    Console.WriteLine(errorMessage);
 
                 CodingSessionRecord record = new(startDate, endDate)
                 {
