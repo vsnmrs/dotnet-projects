@@ -10,7 +10,8 @@
             {
                 Console.WriteLine("0. Close Program");
                 Console.WriteLine("1. Add a session record");
-                Console.WriteLine("2. List all records");
+                Console.WriteLine("2. Remove a session record");
+                Console.WriteLine("3. List all records");
 
                 string selection = Console.ReadLine();
 
@@ -52,6 +53,21 @@
                         }
                         break;
                     case "2":
+                        {
+                            Console.WriteLine("Enter the id for the session you want to delete:");
+                            string idString = Console.ReadLine();
+                            int id;
+                            while(!int.TryParse(idString, out id))
+                            {
+                                Console.WriteLine("Incorrect ID, try again!");
+                                idString = Console.ReadLine();
+                            }
+
+                            db.DeleteRecord(id);
+                            Console.WriteLine("Record deleted!");
+                        }
+                        break;
+                    case "3":
                         {
                             List<CodingSessionRecord> records = db.ReadDBTable();
 

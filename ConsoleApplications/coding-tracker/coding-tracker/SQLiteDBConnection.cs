@@ -56,9 +56,10 @@ namespace coding_tracker
 
         }
 
-        public void DeleteRecord()
+        public void DeleteRecord(int id)
         {
-
+            _command.CommandText = $"DELETE FROM {_tableName} WHERE id = '{id}'";
+            _command.ExecuteNonQuery();
         }
 
         public List<CodingSessionRecord> ReadDBTable()
