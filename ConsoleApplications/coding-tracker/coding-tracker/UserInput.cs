@@ -9,9 +9,10 @@
             while (!closeApplication)
             {
                 Console.WriteLine("0. Close Program");
-                Console.WriteLine("1. Add a session record");
-                Console.WriteLine("2. Remove a session record");
-                Console.WriteLine("3. List all records");
+                Console.WriteLine("1. Add a complete session record");
+                Console.WriteLine("2. Start a new session");
+                Console.WriteLine("3. Remove a session record");
+                Console.WriteLine("4. List all records");
 
                 string selection = Console.ReadLine();
 
@@ -54,6 +55,21 @@
                         break;
                     case "2":
                         {
+                            DateTime startTime = DateTime.Now;
+                            Console.WriteLine("Coding session started at {0}", startTime.ToString("dd.MM.yyyy HH:mm"));
+                            Console.WriteLine("Press any key to end the session!");
+                            Console.ReadKey();
+
+                            DateTime endTime = DateTime.Now;
+                            Console.WriteLine("Coding session ended at {0}", endTime.ToString("dd.MM.yyyy HH:mm"));
+
+                            CodingSessionRecord record = new CodingSessionRecord(startTime, endTime);
+                            Console.WriteLine("Total session duration was {0} minutes", record.SessionDuration);
+                            db.InsertRecord(record);
+                        }
+                        break;
+                    case "3":
+                        {
                             Console.WriteLine("Enter the id for the session you want to delete:");
                             string idString = Console.ReadLine();
                             int id;
@@ -67,7 +83,7 @@
                             Console.WriteLine("Record deleted!");
                         }
                         break;
-                    case "3":
+                    case "4":
                         {
                             List<CodingSessionRecord> records = db.ReadDBTable();
 
