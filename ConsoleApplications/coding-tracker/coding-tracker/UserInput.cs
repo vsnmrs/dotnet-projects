@@ -8,11 +8,11 @@
 
             while (!closeApplication)
             {
-                Console.WriteLine("0. Close Program");
-                Console.WriteLine("1. Add a complete session record");
-                Console.WriteLine("2. Start a new session");
-                Console.WriteLine("3. Remove a session record");
-                Console.WriteLine("4. List all records");
+                Console.WriteLine("0: Close Program");
+                Console.WriteLine("1: Add a complete session record");
+                Console.WriteLine("2: Start a new session");
+                Console.WriteLine("3: Remove a session record");
+                Console.WriteLine("4: List all records");
 
                 string selection = Console.ReadLine();
 
@@ -90,7 +90,38 @@
                             TableVisualisation tableVisualisation = new(records);
                             tableVisualisation.DisplayTable();
 
-                            Console.WriteLine();
+                            bool returnToMainMenu = false;
+
+                            while (!returnToMainMenu)
+                            {
+                                Console.WriteLine("0: Return to main menu");
+                                Console.WriteLine("1: Sort by date");
+                                Console.WriteLine("2: Sort by duration");
+
+                                string command = Console.ReadLine();
+
+                                switch (command)
+                                {
+                                    case "0":
+                                        returnToMainMenu = true;
+                                        break;
+                                    case "1":
+                                        {
+                                            TableVisualisation sortedTable = new(Helper.SortByDate(records));
+                                            sortedTable.DisplayTable();
+                                        }
+                                        break;
+                                    case "2":
+                                        {
+                                            TableVisualisation sortedTable = new(Helper.SortByDuration(records));
+                                            sortedTable.DisplayTable();
+                                        }
+                                        break;
+                                    default:
+                                        Console.WriteLine("Command unrecognized!");
+                                        break;
+                                }
+                            }
                         }
                         break;
                     default:

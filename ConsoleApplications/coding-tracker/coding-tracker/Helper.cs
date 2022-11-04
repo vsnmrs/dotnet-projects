@@ -40,5 +40,15 @@ namespace coding_tracker
 
             return true;
         }
+
+        public static List<CodingSessionRecord> SortByDate(List<CodingSessionRecord> records)
+        {
+            return records.OrderBy(rec => rec.SessionStart).ToList();
+        }
+
+        public static List<CodingSessionRecord> SortByDuration(List<CodingSessionRecord> records)
+        {
+            return records.OrderBy(rec => rec.SessionDuration).ToList();
+        }
     }
 }
