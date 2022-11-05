@@ -97,6 +97,7 @@
                                 Console.WriteLine("0: Return to main menu");
                                 Console.WriteLine("1: Sort by date");
                                 Console.WriteLine("2: Sort by duration");
+                                Console.WriteLine("3: Group by years");
 
                                 string command = Console.ReadLine();
 
@@ -115,6 +116,24 @@
                                         {
                                             TableVisualisation sortedTable = new(Helper.SortByDuration(records));
                                             sortedTable.DisplayTable();
+                                        }
+                                        break;
+                                    case "3":
+                                        {
+                                            var years = records.GroupBy(record => record.SessionStart.Year);
+
+                                            foreach (var year in years)
+                                            {
+                                                Console.Write($"{year.Key}: ");
+                                                int count = 0, totalDuration = 0;
+                                                foreach (var rec in year)
+                                                {
+                                                    totalDuration += (int)rec.SessionDuration;
+                                                    count++;
+                                                }
+                                                double averageDuration = totalDuration / count;
+                                                Console.WriteLine($"Total sessions duration: {totalDuration} | Average session duration: {averageDuration}");
+                                            }
                                         }
                                         break;
                                     default:

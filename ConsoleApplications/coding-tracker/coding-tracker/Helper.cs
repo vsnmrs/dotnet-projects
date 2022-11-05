@@ -34,7 +34,7 @@ namespace coding_tracker
             TimeSpan duration = endDate - startDate;
             if (duration.TotalMinutes > 1440)
             {
-                errorMessage = "No way you code more than a day staight!";
+                errorMessage = "No way you code more than a day straight!";
                 return false;
             }
 

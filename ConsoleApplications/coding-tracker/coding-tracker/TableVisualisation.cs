@@ -5,6 +5,7 @@ namespace coding_tracker
     public class TableVisualisation
     {
         private List<List<object>> _tableData;
+
         public TableVisualisation(List<CodingSessionRecord> records)
         {
             _tableData = new List<List<object>>();
