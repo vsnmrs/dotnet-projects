@@ -1,4 +1,7 @@
-﻿namespace Flashcards
+﻿using System.Configuration;
+using System.Collections.Specialized;
+
+namespace Flashcards
 {
     internal class Program
     {
