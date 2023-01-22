@@ -1,5 +1,4 @@
 ﻿using System.Configuration;
-using System.Collections.Specialized;
 
 namespace Flashcards
 {
@@ -8,6 +7,9 @@ namespace Flashcards
         static void Main(string[] args)
         {
             SQLController controller = new SQLController();
+            controller.ConnectToDatabase();
+            controller.CreateTable();
+            controller.CloseConnection();
         }
     }
 }

@@ -1,35 +1,57 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 
 namespace Flashcards
 {
     internal class SQLController
     {
+        private SqlConnection? _connection;
+        private SqlCommand? _command;
+        private readonly string? _connectionString;
+
         public SQLController()
         {
-            SqlConnection connection = null;
+            _connectionString = ConfigurationManager.AppSettings.Get("connectionString");
+        }
 
+        public bool ConnectToDatabase()
+        {
             try
             {
-                connection = new SqlConnection("Server=(LocalDb)\\FlashCardsDB;Database=Flashcards;Trusted_Connection=True;");
+                _connection = new SqlConnection(_connectionString);
+                _connection.Open();
 
-                SqlCommand sqlCommand = new SqlCommand("CREATE TABLE TestTable(Id INT NOT NULL, Name VARCHAR(100), Date DATE)", connection);
-
-                connection.Open();
-
-                sqlCommand.ExecuteNonQuery();
-
-                Console.WriteLine("Table created successfully!");
+                return true;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+
+                return false;
             }
-            finally
+        }
+
+        public bool CreateTable()
+        {
+            try
             {
-                connection.Close();
+                _command = new SqlCommand("CREATE TABLE TestTable(Id INT NOT NULL, Name VARCHAR(100), Date DATE)", _connection);
+                _command.ExecuteNonQuery();
+                Console.WriteLine("Table created successfully!");
+
+                return true;
             }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
+
+        public void CloseConnection()
+        {
+            _connection.Close();
         }
     }
 }
