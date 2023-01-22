@@ -7,7 +7,7 @@ namespace Flashcards
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            SQLController controller = new SQLController();
         }
     }
 }
