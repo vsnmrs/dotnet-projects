@@ -15,7 +15,9 @@ namespace Flashcards
             //controller.TestInsertion("Dutch");
             //controller.TestInsertion("Italian");
 
-            controller.TestAddingFlashcards("chair", "scaun", 1000);
+            //controller.TestAddingFlashcards("chair", "scaun", 1000);
+
+            UserInput.GetUserInput();
 
             controller.CloseConnection();
         }

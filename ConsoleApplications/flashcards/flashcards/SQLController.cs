@@ -24,6 +24,13 @@ namespace Flashcards
 
                 _command = _connection.CreateCommand();
 
+                //get the SQL version
+                Console.WriteLine("Getting the SQL Server version...");
+                _command.CommandText = "SELECT @@version";
+                string? version = _command.ExecuteScalar().ToString();
+                Console.WriteLine(version);
+                Console.WriteLine();
+
                 return true;
             }
             catch (Exception e)
@@ -52,7 +59,7 @@ namespace Flashcards
 
                 _command.ExecuteNonQuery();
 
-                Console.WriteLine("Tables created successfully or already exist!");
+                Console.WriteLine("Tables created successfully or already exist! \n");
 
                 return true;
             }
