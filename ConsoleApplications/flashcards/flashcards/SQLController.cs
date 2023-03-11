@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.SqlServer.Server;
+using System;
 using System.Configuration;
 using System.Data.SqlClient;
 
@@ -31,6 +32,8 @@ namespace Flashcards
                 Console.WriteLine(version);
                 Console.WriteLine();
 
+                CreateTables();
+
                 return true;
             }
             catch (Exception e)
@@ -41,7 +44,7 @@ namespace Flashcards
             }
         }
 
-        public bool CreateTables()
+        private bool CreateTables()
         {
             try
             {
@@ -70,7 +73,28 @@ namespace Flashcards
             }
         }
 
-        public void TestInsertion(string name)
+        public List<string> GetStacksList()
+        {
+            List<string> stacksList = new List<string>();
+
+            _command.CommandText = "SELECT * FROM dbo.Stacks";
+
+            SqlDataReader dataReader = _command.ExecuteReader();
+
+            while(dataReader.Read())
+            {
+                int id = dataReader.GetInt32(0);
+                string name = dataReader.GetString(1);
+
+                stacksList.Add(name);
+            }
+
+            dataReader.Close();
+
+            return stacksList;
+        }
+
+        public void AddNewStackElement(string name)
         {
             _command.CommandText = $"INSERT INTO dbo.Stacks(Name) VALUES ('{name}')";
             _command.ExecuteNonQuery();
