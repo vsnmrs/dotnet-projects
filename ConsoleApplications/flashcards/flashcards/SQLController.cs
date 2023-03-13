@@ -1,4 +1,5 @@
-﻿using Microsoft.SqlServer.Server;
+﻿using flashcards;
+using Microsoft.SqlServer.Server;
 using System;
 using System.Configuration;
 using System.Data.SqlClient;
@@ -92,6 +93,29 @@ namespace Flashcards
             dataReader.Close();
 
             return stacksList;
+        }
+
+        public List<FlashcardInfo> GetFlashcardsList()
+        {
+            List<FlashcardInfo> flashcards = new List<FlashcardInfo>();
+
+            _command.CommandText = "SELECT * FROM dbo.Flashcards";
+
+            SqlDataReader dataReader = _command.ExecuteReader();
+
+            while (dataReader.Read()) 
+            {
+                FlashcardInfo flashcard = new FlashcardInfo();
+
+                flashcard.Id = dataReader.GetInt32(0);
+                flashcard.Front = dataReader.GetString(1);
+                flashcard.Back = dataReader.GetString(2);
+                flashcard.StackKey = dataReader.GetInt32(3);
+
+                flashcards.Add(flashcard);
+            }
+
+            return flashcards;
         }
 
         public void AddNewStackElement(string name)

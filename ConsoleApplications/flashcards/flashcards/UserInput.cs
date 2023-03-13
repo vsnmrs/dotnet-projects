@@ -1,4 +1,5 @@
-﻿using System;
+﻿using flashcards;
+using System;
 using System.Collections.Generic;
 using System.IO.Pipes;
 using System.Transactions;
@@ -64,6 +65,37 @@ namespace Flashcards
                                             sqlDb.AddNewStackElement(stackName);
                                             break;
                                         }
+                                    default:
+                                        break;
+                                }
+                            }
+
+                            break;
+                        }
+                    case "2":
+                        {
+                            bool returnToMainMenu = false;
+
+                            while (!returnToMainMenu)
+                            {
+                                List<FlashcardInfo> flashcards = sqlDb.GetFlashcardsList();
+                                foreach (FlashcardInfo flashcard in flashcards)
+                                {
+                                    Console.WriteLine($"{flashcard.Id} {flashcard.Front} {flashcard.Back} {flashcard.StackKey}");
+                                }
+
+                                Console.WriteLine("-------------------");
+
+                                Console.WriteLine("  [1] Add new flashcard");
+                                Console.WriteLine("  [0] Return to main menu");
+
+                                string res = Console.ReadLine();
+
+                                switch(res)
+                                {
+                                    case "0":
+                                        returnToMainMenu = true;
+                                        break;
                                     default:
                                         break;
                                 }
