@@ -96,8 +96,15 @@ namespace Flashcards
 
         public void AddNewStackElement(string name)
         {
-            _command.CommandText = $"INSERT INTO dbo.Stacks(Name) VALUES ('{name}')";
-            _command.ExecuteNonQuery();
+            try
+            {
+                _command.CommandText = $"INSERT INTO dbo.Stacks(Name) VALUES ('{name}')";
+                _command.ExecuteNonQuery();
+            }
+            catch (Exception e) 
+            {
+                Console.WriteLine(e.Message);
+            }
         }
 
         public void TestAddingFlashcards(string front, string back, int stackKey)
